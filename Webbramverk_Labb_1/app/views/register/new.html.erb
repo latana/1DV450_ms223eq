@@ -1,0 +1,18 @@
+<h1>REGISTER!!!! MOTHER FUCKER!!!</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user) do |i| %>
+        <%= i.label :email %>
+        <%= i.email_field :email, class: 'form-control' %>
+
+        <%= i.label :password %>
+        <%= i.password_field :password, class: 'form-control' %>
+
+        <%= i.label :password_confirmation %>
+        <%= i.password_field :password_confirmation, class: 'form-control' %>
+        <br />
+        <%= i.submit "Register", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
