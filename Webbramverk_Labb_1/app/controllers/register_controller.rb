@@ -6,11 +6,13 @@ class RegisterController < ApplicationController
 
   def create
     @user = User.new(user_params)
-
-    @user.key = 'test'
-    #(0...5).map { (65 + rand(26)).chr }.join
-
+    key = Key.new
+    key.key = (0...20).map { (65 + rand(26)).chr }.join
+    key.user = @user
+    key.save
     if @user.save
+
+
       redirect_to login_path
     else
       flash.now[:danger] = 'Email/password is invalid'

@@ -8,10 +8,22 @@
 </head>
 <body>
     <div class="container">
+      <div class="center jumbotron">
+        <h1>Välkommen</h1>
+        <h2>
+          Webbramverk Labration 1
+        </h2>
+      </div>
 
       <% flash.each do |message_type, message| %>
           <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
+
+      <% if isLoggedIn? %>
+          <div class="alert alert-success" role="alert">Logged in as <%= currentUser.email %></div>
+          <%= link_to "Log out", logout_path %>
+
+      <%end%>
 
       <%= yield %>
     </div>

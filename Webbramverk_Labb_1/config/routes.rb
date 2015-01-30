@@ -8,7 +8,12 @@ Rails.application.routes.draw do
   root :to => redirect('/login')
   get '/login' => 'login#index'
   get '/register' => 'register#new'
+  get '/users' => 'users#index'
+  get '/logout' => 'login#destroy'
+  get '/delete' => 'users#destroy'
+  resources :users, only: [:show]
   post '/users'   => 'register#create'
+  post '/login'   => 'login#create'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
