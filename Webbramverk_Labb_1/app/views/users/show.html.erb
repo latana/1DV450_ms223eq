@@ -3,16 +3,17 @@
 <% if currentUser && @key %>
 
     <p><%= @key.key %></p>
-         <%= link_to 'delete', @key.user, method: :delete,
-                      data: { confirm: 'You sure?' } %>
+         <%= link_to 'Delete', @key.user, method: :delete,
+                      data: { confirm: 'Are you sure you want to delete the api key?' } %>
     <% elsif currentUser.admin? %>
 <ul>
     <% @allkeys.each do |i| %>
         <li><%= i.user.email %>, <%= i.key %></li>
-      <%= link_to 'delete', i.user, method: :delete,
-                  data: { confirm: 'You sure?' } %>
-
+      <%= link_to 'Delete', i.user, method: :delete,
+                  data: { confirm: 'Are you sure you want to delete the api key?' } %>
     <% end %>
 </ul>
+<%else%>
+    <%= link_to 'Regenerate', @user, method: :post %>
 <% end %>
 

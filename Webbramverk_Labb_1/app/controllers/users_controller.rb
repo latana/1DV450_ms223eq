@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   def show
     @allkeys = Key.all
     @key = Key.find_by_user_id(params[:id])
+    @user = User.find(params[:id])
   end
 
   def destroy
@@ -19,6 +20,22 @@ class UsersController < ApplicationController
       render 'show'
     end
 
+  end
+
+  def create
+
+    key = Key.new
+    key.key = (0...20).map { (65 + rand(26)).chr }.join
+    key.user = User.find(params[:id])
+
+    if key.save
+
+      flash[:success] = 'Your key has been regenerated'
+      redirect_to user_path(currentUser)
+    else
+      flash.now[:danger] = 'somthing went wrong'
+      render 'show'
+    end
   end
 
   def correctUser

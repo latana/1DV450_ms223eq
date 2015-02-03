@@ -18,12 +18,13 @@ Rails.application.routes.draw do
   get '/key' => 'users#destroy'
   get '/delete/:id', to: 'users#destroy'
   resources :users, only: [:show, :destroy]
+  post '/users/:id', to: 'users#create'
   post '/users'   => 'register#create'
   post '/login'   => 'login#create'
 
-  match '/404', to: 'errors#file_not_found', via: :all
-  match '/422', to: 'errors#unprocessable', via: :all
-  match '/500', to: 'errors#internal_server_error', via: :all
+  #match '/404', to: 'errors#file_not_found', via: :all
+  #match '/422', to: 'errors#unprocessable', via: :all
+  #match '/500', to: 'errors#internal_server_error', via: :all
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
