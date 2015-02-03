@@ -2,10 +2,12 @@ class LoginController < ApplicationController
 
   def index
     # går till login viewn
+    if isLoggedIn?
+      redirect_to user_path(currentUser)
+    end
   end
 
   def create
-
     user = User.find_by(email: params[:login][:email].downcase)
 
     if user && user.authenticate(params[:login][:password])

@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string 'email', :unique => true
       t.string 'password', :limit => 50
       t.string 'key', :unique => true
+      t.boolean 'admin', default: false
       t.timestamps
     end
   end

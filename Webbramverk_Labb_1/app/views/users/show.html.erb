@@ -1,5 +1,18 @@
 <h3>Api Key:</h3>
 
-    <% link_to "delete", key, method: :delete,
-               data: {confirm: "You sure?"} %>
+<% if currentUser && @key %>
+
+    <p><%= @key.key %></p>
+         <%= link_to 'delete', @key.user, method: :delete,
+                      data: { confirm: 'You sure?' } %>
+    <% elsif currentUser.admin? %>
+<ul>
+    <% @allkeys.each do |i| %>
+        <li><%= i.user.email %>, <%= i.key %></li>
+      <%= link_to 'delete', i.user, method: :delete,
+                  data: { confirm: 'You sure?' } %>
+
+    <% end %>
+</ul>
+<% end %>
 

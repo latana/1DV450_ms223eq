@@ -1,6 +1,11 @@
 class RegisterController < ApplicationController
 
   def new
+
+    if isLoggedIn?
+      redirect_to user_path(currentUser)
+    end
+
     @user = User.new
   end
 

@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  get 'errors/file_not_found'
+
+  get 'errors/unprocessable'
+
+  get 'errors/internal_server_error'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -6,14 +12,18 @@ Rails.application.routes.draw do
   # root 'welcome#index'
 
   root :to => redirect('/login')
-  get '/login' => 'login#index'
   get '/register' => 'register#new'
-  get '/users' => 'users#index'
+  get '/login' => 'login#index'
   get '/logout' => 'login#destroy'
-  get '/delete' => 'users#destroy'
-  resources :users, only: [:show]
+  get '/key' => 'users#destroy'
+  get '/delete/:id', to: 'users#destroy'
+  resources :users, only: [:show, :destroy]
   post '/users'   => 'register#create'
   post '/login'   => 'login#create'
+
+  match '/404', to: 'errors#file_not_found', via: :all
+  match '/422', to: 'errors#unprocessable', via: :all
+  match '/500', to: 'errors#internal_server_error', via: :all
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
