@@ -1,7 +1,7 @@
 class RegisterController < ApplicationController
 
   def new
-
+# Om man är inloggad skickas man till sin user page
     if isLoggedIn?
       redirect_to user_path(currentUser)
     end
@@ -9,22 +9,24 @@ class RegisterController < ApplicationController
     @user = User.new
   end
 
+  # Skapar en användare och ger dem en api nyckel
   def create
     @user = User.new(user_params)
     key = Key.new
-    key.key = (0...20).map { (65 + rand(26)).chr }.join
-    key.user = @user
-    key.save
+    key.key = SecureRandom.hex
+
     if @user.save
-
-
-      redirect_to login_path
+      key.user = @user
+      key.save
+      flash[:success] = 'The registration was a success! You are welcome to login now'
+      redirect_to root_path
     else
       flash.now[:danger] = 'Email/password is invalid'
       render 'new'
     end
   end
 
+  # Metod som får innehållet från formuläret
   private
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation)
