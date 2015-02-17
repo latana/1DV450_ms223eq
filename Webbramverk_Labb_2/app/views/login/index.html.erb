@@ -1,0 +1,20 @@
+<% content_for :title do %>
+    Välkommen - Logga in
+<% end %>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(:login) do |i| %>
+
+        <%= i.label :email %>
+        <%= i.email_field :email, class: 'form-control' %>
+
+        <%= i.label :password %>
+        <%= i.password_field :password, class: 'form-control' %>
+        <br />
+        <%= i.submit "Log in", class: "btn btn-primary" %>
+        <%= link_to "Register", register_path %>
+    <% end %>
+
+  </div>
+</div>
