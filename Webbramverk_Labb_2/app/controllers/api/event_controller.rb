@@ -1,18 +1,29 @@
 class Api::EventController < ApplicationController
 
-rescue_from ActionController::UnknownFormat, with: :raise_bad_format
-
-respond_to :json, :xml
+  rescue_from ActionController::UnknownFormat, with: :raise_bad_format
+  before_action :api_authenticate
+  respond_to :json, :xml
 
 # Hämtar ut alla events och skickar i datumsordning
 def index
   event = Event.order(created_at: :desc)
-  respond_with event
+
+  if event.empty?
+    @error = ErrorMessage.new("There is no event to be found", "There is no event to be found" )
+    respond_with  @error, status: :ok
+  else
+    respond_with event, status: :ok
+  end
 end
 
 def show
-  event = Event.find_by_id(params[:id])
+  event = Event.find(params[:id])
   respond_with event
+
+rescue ActiveRecord::RecordNotFound
+  @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you using the right event_id?" )
+  respond_with  @error, status: :not_found
+
 end
 
 def create
@@ -26,29 +37,4 @@ def create
   event.save
 end
 
-private
-
-def raise_bad_format
-  @error = ErrorMessage.new("The API does not support the requested format", "There was a request. Contact the developer!" )
-
-  render json: @error, status: :bad_request
-end
-
-end
-
-class ErrorMessage
-
-  def initialize(dev_mess, usr_mess)
-
-    @message_for_developer = dev_mess
-    @message_for_user = usr_mess
-  end
-
-
-  def to_xml(options={})
-    str = "<error>"
-    str += "  <message_for_developer>#{@message_for_developer}</developerMessage>"
-    str += "  <message_for_developer>#{@message_for_user}</userMessage>"
-    str += "</error>"
-  end
 end

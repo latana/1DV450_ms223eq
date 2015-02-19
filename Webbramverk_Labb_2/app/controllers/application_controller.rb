@@ -5,5 +5,6 @@ class ApplicationController < ActionController::Base
 
   # Tar in loginhelper
   include LoginHelper
+  include ErrorsHelper
 
 end
