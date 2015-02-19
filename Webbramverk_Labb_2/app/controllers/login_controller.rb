@@ -1,5 +1,7 @@
 class LoginController < ApplicationController
 
+  protect_from_forgery :except => [:api_auth]
+
   # renderar ut login viewn om man inte är inloggad
   def index
     if isLoggedIn?
@@ -29,4 +31,19 @@ class LoginController < ApplicationController
     end
     redirect_to root_url
   end
+
+  ## Labration 2
+
+  ## Använd denna när du gör en POST!!!! typ... kanske... eller?
+
+  def api_auth
+
+    user = User.find_by(email: params[:email].downcase)
+    if user && user.authenticate(params[:password])
+      true
+    else
+      render json: { error: 'Invalid username or password' }, status: :unauthorized
+    end
+  end
+
 end

@@ -20,8 +20,6 @@ Rails.application.routes.draw do
   get '/api/creator', to: 'creator#show'
   resources :users, only: [:show, :destroy]
 
-  #get '/api' => 'api_event#index'
-
   namespace :api do
     resources :event
     resources :events_tag

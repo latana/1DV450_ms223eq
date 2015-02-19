@@ -4,6 +4,7 @@ class CreateEvents < ActiveRecord::Migration
 
       t.references :position
       t.references :creator
+      t.string :description
       t.timestamps
     end
   end
