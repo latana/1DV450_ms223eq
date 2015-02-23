@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 20150217093013) do
   end
 
   create_table "positions", force: true do |t|
-    t.string   "long"
-    t.string   "latt"
+    t.float    "long"
+    t.float    "latt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -7,4 +7,16 @@ class ApplicationController < ActionController::Base
   include LoginHelper
   include ErrorsHelper
 
+  OFFSET = 0
+
+  def offset_params
+    if params[:offset].present?
+      @offset = params[:offset].to_i
+    end
+    if params[:limit].present?
+      @limit = params[:limit].to_i
+    end
+    @offset ||= OFFSET
+  end
+
 end

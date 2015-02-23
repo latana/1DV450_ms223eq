@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get '/key' => 'users#destroy'
   get '/delete/:id', to: 'users#destroy'
   get '/api/creator', to: 'creator#show'
+  get '/api/event/nearby' => 'api/event#nearby'
+
   resources :users, only: [:show, :destroy]
 
   namespace :api do
@@ -25,6 +27,7 @@ Rails.application.routes.draw do
     resources :events_tag
     resources :tag
     resources :creator
+
   end
 
 

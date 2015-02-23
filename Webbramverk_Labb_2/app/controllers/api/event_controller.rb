@@ -7,7 +7,11 @@ class Api::EventController < ApplicationController
 
   # Hämtar ut alla events och skickar i datumsordning
   def index
-    event = Event.order(created_at: :desc)
+    event = Event.all.order(created_at: :desc)
+
+    if offset_params.present?
+      event = Event.limit(@limit).offset(@offset).order(created_at: :desc)
+    end
 
     if event.empty?
       @error = ErrorMessage.new("There is no event to be found", "There is no event to be found" )
@@ -29,8 +33,14 @@ class Api::EventController < ApplicationController
 
   def create
     event = Event.new(event_params)
+    tag = Tag.new(tag_params)
 
-    if event.save
+    if Tag.find_by_name(tag.name).present?
+      tag = Tag.find_by_name(tag.name)
+    end
+    event.tags << tag
+
+    if event.save && tag.save
       respond_with event, location: url_for([:api, event]),status: :ok
     else
       respond_with 'Somthing went wrong.', status: :not_found
@@ -69,9 +79,32 @@ class Api::EventController < ApplicationController
       render json: @error, status: :not_found
   end
 
+  # This method is using the geocoder and helps with searching near a specific position
+  def nearby
+
+    # Check the parameters
+    if params[:long].present? && params[:latt].present?
+
+      # using the parameters and offset/limit
+      position = Position.near([params[:long].to_f, params[:latt].to_f], 20).limit(@limit).offset(@offset)
+
+      respond_with position.map(&:events), status: :ok
+    else
+
+      error = ErrorMessage.new("Could not find any resources. Bad parameters?", "Could not find any team!" )
+      render json: error, status: :bad_request # just json in this example
+    end
+
+  end
+
   private
   def event_params
     params.require(:event).permit(:position_id, :creator_id, :description)
+  end
+
+  private
+  def tag_params
+    params.require(:tags).permit(:name)
   end
 
 end
