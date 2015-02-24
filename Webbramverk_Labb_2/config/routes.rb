@@ -30,11 +30,10 @@ Rails.application.routes.draw do
 
   end
 
-
-
   post '/users/:id', to: 'users#create'
   post '/users'   => 'register#create'
   post '/login'   => 'login#create'
+  post '/api/auth'    => 'api/creator#api_auth'
 
   # Felsidorna
 #  match '/404', to: 'errors#file_not_found', via: :all

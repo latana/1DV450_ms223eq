@@ -2,5 +2,7 @@ class Creator < ActiveRecord::Base
 
   has_many :events
 
-  validates :name, presence: true
+  validates :user, presence: true
+  validates :password_digest, presence: true
+  has_secure_password
 end
