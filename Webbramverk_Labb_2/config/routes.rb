@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   get '/logout' => 'login#destroy'
   get '/key' => 'users#destroy'
   get '/delete/:id', to: 'users#destroy'
-  get '/api/creator', to: 'creator#show'
   get '/api/event/nearby' => 'api/event#nearby'
 
   resources :users, only: [:show, :destroy]

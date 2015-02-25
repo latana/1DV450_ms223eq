@@ -2,17 +2,19 @@ class Api::EventController < ApplicationController
 
   protect_from_forgery with: :null_session
   rescue_from ActionController::UnknownFormat, with: :raise_bad_format
-  before_action :api_authenticate
-  before_action :user_authenticate, only: [:create]
+  before_action :api_authenticate, only: [:index, :show, :nearby]
+  before_action :user_authenticate, only: [:create, :update, :destroy]
   respond_to :json, :xml
 
-  # Hämtar ut alla events och skickar i datumsordning
+  # Hämtar ut alla events i datumsordning
   def index
     event = Event.all.order(created_at: :desc)
 
+    # Kontrollerar ifall det är något limit eller offset
     if offset_params.present?
       event = Event.limit(@limit).offset(@offset).order(created_at: :desc)
     end
+    # kontrollerar ifall det finns någon event i närheten
     if params[:query].present?
       event = Event.where('description LIKE ?', "%#{params[:query]}%")
     end
@@ -24,6 +26,7 @@ class Api::EventController < ApplicationController
     end
   end
 
+  # Hämtar ut ett event genom id
   def show
     event = Event.find(params[:id])
     respond_with event
@@ -31,23 +34,24 @@ class Api::EventController < ApplicationController
   rescue ActiveRecord::RecordNotFound
     @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you using the right event_id?" )
     respond_with  @error, status: :not_found
-
   end
 
+  # Skapar en event och en tag om den inte redan finns i listan.
   def create
     event = Event.new(event_params)
     event.creator_id = @creator_id
     tag = Tag.new(tag_params)
 
-    if Tag.find_by_name(tag.name).present?
-      tag = Tag.find_by_name(tag.name)
+    if Tag.find_by_name(tag.name.downcase).present?
+      tag = Tag.find_by_name(tag.name.downcase)
     end
+    # Sparar in i kopplingstabellen
     event.tags << tag
 
     if event.save && tag.save
       respond_with event, location: url_for([:api, event]),status: :ok
     else
-      respond_with 'Somthing went wrong.', status: :not_found
+      render json: {error: 'Somthing went wrong.'}, status: :not_found
     end
 
     rescue ActiveRecord::RecordInvalid
@@ -56,6 +60,7 @@ class Api::EventController < ApplicationController
 
   end
 
+  # Uppdaterar ett event
   def update
 
     old_event = Event.find(params[:id])
@@ -73,6 +78,7 @@ class Api::EventController < ApplicationController
 
   end
 
+  # Tar bort ett event
   def destroy
     event = Event.find(params[:id])
     event.destroy
@@ -83,20 +89,20 @@ class Api::EventController < ApplicationController
       render json: @error, status: :not_found
   end
 
-  # This method is using the geocoder and helps with searching near a specific position
+  # Hämtar ett event som finns i närheten av av en position.
   def nearby
 
-    # Check the parameters
+    # Kontrollerar parametrarna
     if params[:long].present? && params[:latt].present?
 
-      # using the parameters and offset/limit
-      position = Position.near([params[:long].to_f, params[:latt].to_f], 20).limit(@limit).offset(@offset)
+      # Använder parameterna och offset/limit
+      position = Position.near([params[:long].to_f, params[:latt].to_f], 1000).limit(@limit).offset(@offset)
 
-      respond_with position.map(&:events), status: :ok
+      respond_with position.flat_map(&:events), status: :ok
     else
 
       error = ErrorMessage.new("Could not find any resources. Bad parameters?", "Could not find any team!" )
-      render json: error, status: :bad_request # just json in this example
+      render json: error, status: :bad_request
     end
 
   end

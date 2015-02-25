@@ -6,6 +6,7 @@ class Event < ActiveRecord::Base
   belongs_to :creator
   belongs_to :position
 
+  validates :description, presence: true
 
   def serializable_hash (options={})
     options = {

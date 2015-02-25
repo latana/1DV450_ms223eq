@@ -29,12 +29,13 @@ module LoginHelper
     end
   end
 
-  ### Labration 2
+  ### ----------------> Labration 2 <-------------------------
 
+  # Kontrollerar api nyckeln hos användaren
   def api_authenticate
-    if request.headers['apikey'].present?
+    if request.headers['Authorization'].present?
 
-      auth_header = request.headers['apikey'].split(' ').last
+      auth_header = request.headers['Authorization'].split(' ').last
 
       key = Key.find_by_key(auth_header)
 
@@ -46,6 +47,7 @@ module LoginHelper
     end
   end
 
+  # Kontrollerar ifall användaren har en nyckel
   def user_authenticate
     if request.headers['userkey'].present?
 
@@ -60,28 +62,31 @@ module LoginHelper
     end
   end
 
+  # skapar en token med längd 2 timmar
   def encodeJWT(creator, exp=2.hours.from_now)
 
+    # binder token till användaren
     payload = { creator_id: creator.id }
     payload[:exp] = exp.to_i
 
-    # Encode the payload whit the application secret, and a more advanced hash method (creates header with JWT gem)
     JWT.encode( payload, Rails.application.secrets.secret_key_base, "HS512")
 
   end
 
-  # When we get a call we have to decode it - Returns the payload if good otherwise false
+  # Tar emot och decrypterar vår token
   def decodeJWT(token)
-    # puts token
+
+    # krypterar tillbaka
     payload = JWT.decode(token, Rails.application.secrets.secret_key_base, "HS512")
-    # puts payload
+
+    # kontrollerar tiden
     if payload[0]["exp"] >= Time.now.to_i
       payload
     else
-      puts "time fucked up"
+      puts "The token has expired. Please login again and get a new one"
       false
     end
-      # catch the error if token is wrong
+
   rescue => error
     puts error
     nil

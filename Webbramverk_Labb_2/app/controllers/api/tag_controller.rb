@@ -2,9 +2,11 @@ class Api::TagController < ApplicationController
 
   protect_from_forgery with: :null_session
   rescue_from ActionController::UnknownFormat, with: :raise_bad_format
-  before_action :api_authenticate
+  before_action :api_authenticate, only: [:index, :show]
+  before_action :user_authenticate, only: [:create, :update, :destroy]
   respond_to :json, :xml
 
+  # Hämtar ut alla taggar
   def index
     tag = Tag.all
 
@@ -20,6 +22,7 @@ class Api::TagController < ApplicationController
     end
   end
 
+  # Visar alla events kopplat till en viss tag
   def show
     tag_event = Tag.find(params[:id])
     event = tag_event.events
@@ -31,6 +34,7 @@ class Api::TagController < ApplicationController
 
   end
 
+  # skapar en tagg
   def create
     tag = Tag.new(tag_params)
 
@@ -40,9 +44,9 @@ class Api::TagController < ApplicationController
       @error = ErrorMessage.new("The tag was not found!", "Could not find resource. Are you using the right tag_id?" )
       respond_with  @error, status: :not_found
     end
-
   end
 
+  # uppdaterar en tag
   def update
 
     old_tag = Tag.find(params[:id])
@@ -59,6 +63,7 @@ class Api::TagController < ApplicationController
 
   end
 
+  # tar bort en tag
   def destroy
     tag = Tag.find(params[:id])
     tag.destroy

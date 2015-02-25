@@ -2,13 +2,14 @@ class Api::CreatorController < ApplicationController
 
   rescue_from ActionController::UnknownFormat, with: :raise_bad_format
   protect_from_forgery with: :null_session
-  before_action :api_authenticate
+  before_action :api_authenticate, only: [:index, :show]
   respond_to :json, :xml
 
+  # Hämtar ut alla creators
   def index
     creator = Creator.all
 
-    if tag.empty?
+    if creator.empty?
       @error = ErrorMessage.new("There is no creator to be found", "There is no creator to be found" )
       respond_with  @error, status: :ok
     else
@@ -16,6 +17,7 @@ class Api::CreatorController < ApplicationController
     end
   end
 
+  # Visar events som en viss användare har skapat
   def show
     creator_event = Creator.find(params[:id])
     events_by_creator = creator_event.events
@@ -26,10 +28,8 @@ class Api::CreatorController < ApplicationController
     respond_with  @error, status: :not_found
   end
 
-  ## Använd denna när du gör en POST!!!! typ... kanske... eller?
-
+# kontrollerar creator namnet och lösenordet och skickar en token.
   def api_auth
-
     creator = Creator.find_by(user: request.headers[:user])
     if creator && creator.authenticate(request.headers[:password])
       render json: { auth_token: encodeJWT(creator) }
