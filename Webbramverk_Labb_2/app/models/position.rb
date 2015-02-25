@@ -6,6 +6,4 @@ class Position < ActiveRecord::Base
 
   validates :long, presence: true
   validates :latt, presence: true
-
-  after_validation :reverse_geocode
 end

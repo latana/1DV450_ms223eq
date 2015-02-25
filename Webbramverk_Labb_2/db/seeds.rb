@@ -14,3 +14,27 @@ User.create!(email: 'admin@mail.com',
 Creator.create!(user: 'Hades',
                 password:              'password',
                 password_confirmation: 'password')
+Creator.create!(user: 'Kalle',
+                password:              'password',
+                password_confirmation: 'password')
+Creator.create!(user: 'Olle',
+                password:              'password',
+                password_confirmation: 'password')
+Key.create!(user_id: 1,
+                key:              '12345')
+
+Position.create!(long: 16.3,
+                  latt: 28.4)
+
+Position.create!(long: 23.4,
+                 latt: 32.25)
+
+
+Tag.create!(name: 'Simma',)
+Tag.create!(name: 'Rollspel',)
+Tag.create!(name: 'Förfest',)
+
+Event.create!(tags: Tag.all,
+              position_id: 1,
+              creator_id: 1,
+            description: 'Nu ska vi ha kul')
