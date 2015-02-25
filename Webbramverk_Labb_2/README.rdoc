@@ -9,4 +9,4 @@ Installation
 5. Then write "rake db:seed" to create data
 6. When you test the application upload the "Postman.json.txt" found in the root of the project to postman
 
-Don't forget to run the "post user auth" and replace the userkey code in the header.
+Don't forget to run the "post user auth" and replace the userkey token in the header. The one already write has probobly expired.
