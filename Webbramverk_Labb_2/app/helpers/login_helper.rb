@@ -54,7 +54,9 @@ module LoginHelper
       auth_header = request.headers['userkey'].split(' ').last
 
       @token_payload = decodeJWT auth_header.strip
-      if @token_payload
+      if !@token_payload
+        render json: { error: 'The provided token wasn´t correct' }, status: :bad_request
+      else
         @creator_id = @token_payload[0]['creator_id']
       end
     else
