@@ -1,0 +1,20 @@
+<p>Main page!</p>
+<div data-ng-controller="mainController" class="alert-success">{{message}}</div>
+
+<div class="col-md-4" data-ng-controller="mainController as main">
+
+    <h3>Alla events</h3>
+
+    <table class=" table table-condensed table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tr data-ng-repeat="event in main.events">
+            <td>{{event.description}}</td>
+        </tr>
+
+    </table>
+</div>
