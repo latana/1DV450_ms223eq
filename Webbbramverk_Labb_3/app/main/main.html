@@ -1,7 +1,10 @@
-<p>Main page!</p>
+<h1>Main page</h1>
 <div data-ng-controller="mainController" class="alert-success">{{message}}</div>
 
 <div class="col-md-4" data-ng-controller="mainController as main">
+
+    <p class="alert alert-success" data-ng-show="isLoggedIn">Du är inloggad</p>
+    <p class="alert alert-danger" data-ng-show="!isLoggedIn">Du är inte inloggad</p>
 
     <h3>Alla events</h3>
 
@@ -13,6 +16,7 @@
         </tr>
         </thead>
         <tr data-ng-repeat="event in main.events">
+            <td><button ng-show="isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove Event</button></td>
             <td>{{event.description}}</td>
         </tr>
 

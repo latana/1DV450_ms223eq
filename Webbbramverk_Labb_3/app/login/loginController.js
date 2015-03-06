@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('myApp.login', ['ngRoute'])
+angular.module('myApp.login', ['ngRoute', 'ngCookies'])
 
 .config(['$routeProvider', function($routingProvider){
     $routingProvider.when('/login',{
@@ -16,14 +16,13 @@ angular.module('myApp.login', ['ngRoute'])
         return{}
     })
 
-.controller('loginController', ['$http', '$scope', '$location', function($http, $scope, $location, message){
+.controller('loginController', ['$http', '$scope', '$location', '$rootScope', '$cookieStore', '$window', function($http, $scope, $location, $rootScope, $cookieStore, $window){
 
         var auth = this;
-        $scope.message = message;
+        $rootScope.isLoggedIn = false;
         auth.login = function(){
 
             var data = {'user': auth.user, 'password' : auth.password};
-            $scope.isLoggedIn = false;
 
             var url = "http://localhost:3000/api/auth";
             var config = {
@@ -38,20 +37,19 @@ angular.module('myApp.login', ['ngRoute'])
 
             promise.success(function(data, status, headers, config){
 
+                $cookieStore.put('user', config.headers.user);
+                $window.sessionStorage.setItem('token', data.auth_token);
                 $scope.message = "Success";
-                console.log($scope.message);
-                $scope.token = data.auth_token;
-                $scope.isLoggedIn = true;
-                $location.path('/main')
-
+                $window.sessionStorage.setItem('isLoggedIn', true);
+                console.log($window.sessionStorage.getItem('isLoggedIn'));
+                $location.path('/main');
             });
 
             promise.error(function(data, status, headers, config) {
 
                 $scope.message = data.error;
-                $scope.token = null;
-                $scope.isLoggedIn = false;
+                $window.sessionStorage.setItem('token', null);
+                $window.sessionStorage.setItem('isLoggedIn', false);
             });
         }
-
     }]);

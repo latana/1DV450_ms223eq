@@ -1,7 +1,7 @@
 /**
  * Created by Latana on 2015-03-05.
  */
-'use strict'
+'use strict';
 
 angular.module('myApp.main', ['ngRoute'])
 
@@ -12,10 +12,10 @@ angular.module('myApp.main', ['ngRoute'])
         });
     }])
 
-    .controller('mainController', ['$http', '$scope', function($http, $scope){
+    .controller('mainController', ['$http', '$rootScope', '$scope', '$window', function($http, $rootScope, $scope, $window){
 
         var getEvent = this;
-
+        $scope.isLoggedIn = $window.sessionStorage.getItem('isLoggedIn');
         var getConfig = {
             headers: {
                 "Authorization" : '12345',
@@ -24,17 +24,34 @@ angular.module('myApp.main', ['ngRoute'])
         };
 
         $http.get("http://localhost:3000/api/event", getConfig).success(function(data) {
-            console.log(data);
             getEvent.events = data;
         }).error(function(data, status) {
-            //console.log(data);
             getEvent.alert = data.error;
         });
 
-        // Havent implemented this (should try to do a DELETE and send the correct token )
-        // No need for more validation here since the server is checking the token
-        getEvent.removeEvent = function(event) {
-            console.log(event);
+        getEvent.removeEvent = function(id) {
+
+            var index = getEvent.events.map(function(e) {return e.id;}).indexOf(id);
+            var url = "http://localhost:3000/api/event/" + id;
+            var config = {
+                headers: {
+                    "userkey" : $rootScope.token,
+                    "Accept" : "application/json"
+                }
+            };
+            var promise = $http.delete(url, config);
+
+            promise.success(function(data, status, config){
+
+                getEvent.events.splice(index, 1);
+                console.log("it is deleted");
+            });
+
+            promise.error(function(data, status, config) {
+
+                console.log("NOT DELETED!!!");
+            });
+
         };
 
     }]);
