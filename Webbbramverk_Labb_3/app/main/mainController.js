@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('myApp.main', ['ngRoute'])
+angular.module('myApp.main', ['ngRoute', 'ngMap'])
 
     .config(['$routeProvider', function($routingProvider){
         $routingProvider.when('/main',{
@@ -12,10 +12,11 @@ angular.module('myApp.main', ['ngRoute'])
         });
     }])
 
-    .controller('mainController', ['$http', '$rootScope', '$scope', '$window', function($http, $rootScope, $scope, $window){
+    .controller('mainController', ['$http', '$rootScope', '$scope', '$window', 'appService',function($http, $rootScope, $scope, $window, appService){
 
+        $scope.isLoggedIn = appService.getIsLoggedIn();
+        $scope.message = appService.getMessage();
         var getEvent = this;
-        $scope.isLoggedIn = $window.sessionStorage.getItem('isLoggedIn');
         var getConfig = {
             headers: {
                 "Authorization" : '12345',
@@ -35,7 +36,7 @@ angular.module('myApp.main', ['ngRoute'])
             var url = "http://localhost:3000/api/event/" + id;
             var config = {
                 headers: {
-                    "userkey" : $rootScope.token,
+                    "userkey" : $window.sessionStorage.getItem('token'),
                     "Accept" : "application/json"
                 }
             };
@@ -44,14 +45,13 @@ angular.module('myApp.main', ['ngRoute'])
             promise.success(function(data, status, config){
 
                 getEvent.events.splice(index, 1);
-                console.log("it is deleted");
+                appService.setMessage('The event is deleted');
+                $scope.message = appService.getMessage();
             });
 
             promise.error(function(data, status, config) {
-
                 console.log("NOT DELETED!!!");
             });
 
         };
-
     }]);

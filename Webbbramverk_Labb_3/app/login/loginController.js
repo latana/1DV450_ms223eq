@@ -16,10 +16,9 @@ angular.module('myApp.login', ['ngRoute', 'ngCookies'])
         return{}
     })
 
-.controller('loginController', ['$http', '$scope', '$location', '$rootScope', '$cookieStore', '$window', function($http, $scope, $location, $rootScope, $cookieStore, $window){
+.controller('loginController', ['$http', '$scope', '$location', '$rootScope', '$cookieStore', '$window', 'appService', function($http, $scope, $location, $rootScope, $cookieStore, $window, appService){
 
         var auth = this;
-        $rootScope.isLoggedIn = false;
         auth.login = function(){
 
             var data = {'user': auth.user, 'password' : auth.password};
@@ -40,7 +39,7 @@ angular.module('myApp.login', ['ngRoute', 'ngCookies'])
                 $cookieStore.put('user', config.headers.user);
                 $window.sessionStorage.setItem('token', data.auth_token);
                 $scope.message = "Success";
-                $window.sessionStorage.setItem('isLoggedIn', true);
+                appService.setLoggedIn(true);
                 console.log($window.sessionStorage.getItem('isLoggedIn'));
                 $location.path('/main');
             });
@@ -48,7 +47,7 @@ angular.module('myApp.login', ['ngRoute', 'ngCookies'])
             promise.error(function(data, status, headers, config) {
 
                 $scope.message = data.error;
-                $window.sessionStorage.setItem('token', null);
+                $window.sessionStorage.setItem('token', false);
                 $window.sessionStorage.setItem('isLoggedIn', false);
             });
         }

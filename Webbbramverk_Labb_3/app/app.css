@@ -28,3 +28,8 @@
   content: "";
   padding: 0;
 }
+
+#list{
+  overflow-y: scroll;
+  height:375px;
+}

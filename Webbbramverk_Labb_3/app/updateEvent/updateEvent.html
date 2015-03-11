@@ -1,0 +1,14 @@
+<div class="col-md-4" data-ng-controller="updateEventController as update">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Update</h3>
+        </div>
+        <div class="panel-body">
+            <form novalidate name="update.form" class="simple-form">
+                Description: <br />
+                <input type="name" ng-model="update.description"/><br />
+                <button data-ng-click="update.update()">Update</button>
+            </form>
+        </div>
+    </div>
+</div>

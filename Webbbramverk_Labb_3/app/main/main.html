@@ -1,24 +1,28 @@
 <h1>Main page</h1>
-<div data-ng-controller="mainController" class="alert-success">{{message}}</div>
-
 <div class="col-md-4" data-ng-controller="mainController as main">
 
     <p class="alert alert-success" data-ng-show="isLoggedIn">Du är inloggad</p>
     <p class="alert alert-danger" data-ng-show="!isLoggedIn">Du är inte inloggad</p>
+    <p class="alert alert-info" data-ng-show="message">{{message}}</p>
 
     <h3>Alla events</h3>
-
-    <table class=" table table-condensed table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tr data-ng-repeat="event in main.events">
-            <td><button ng-show="isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove Event</button></td>
-            <td>{{event.description}}</td>
-        </tr>
-
-    </table>
+    <a href="#createEvent" ng-show="isLoggedIn">Create event</a>
+    <div id="list">
+        <table class=" table table-condensed table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr data-ng-repeat="event in main.events">
+                <td><button ng-show="isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove</button></td>
+                <td><a href="#update/{{event.id}}" ng-show="isLoggedIn" ng-click="main.updateEvent(event)">Update</a></td>
+                <td>{{event.description}}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div class="col-md-8">
+    <map center="56.66830, 16.35315" zoom="8" class="map" on-click="mapctrl.checkPosition()" style="height:500px;"></map>
 </div>
