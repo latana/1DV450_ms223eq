@@ -1,6 +1,7 @@
 <h1>Main page</h1>
-<div class="col-md-4" data-ng-controller="mainController as main">
+<div class="col-md-12" data-ng-controller="mainController as main">
 
+    <div class="col-md-4">
     <p class="alert alert-success" data-ng-show="isLoggedIn">Du är inloggad</p>
     <p class="alert alert-danger" data-ng-show="!isLoggedIn">Du är inte inloggad</p>
     <p class="alert alert-info" data-ng-show="message">{{message}}</p>
@@ -15,14 +16,45 @@
                 <th></th>
             </tr>
             </thead>
-            <tr data-ng-repeat="event in main.events">
+            <tr data-ng-repeat="event in main.events | filter:search">
                 <td><button ng-show="isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove</button></td>
                 <td><a href="#update/{{event.id}}" ng-show="isLoggedIn" ng-click="main.updateEvent(event)">Update</a></td>
-                <td>{{event.description}}</td>
+                <td><a href="#detail/{{event.id}}">{{event.description}}</a></td>
             </tr>
         </table>
     </div>
-</div>
-<div class="col-md-8">
-    <map center="56.66830, 16.35315" zoom="8" class="map" on-click="mapctrl.checkPosition()" style="height:500px;"></map>
-</div>
+    </div>
+    <div class="col-md-5">
+        <div class="input-group col-md-12">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tags<span class="caret"></span></button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="tag in main.tags" ng-click="main.filterTag(tag.id)"><a>{{tag.name}}</a></li>
+                    <li ng-click="main.getAllEvents()"><a>Alla Tags</a></li>
+                </ul>
+            </div>
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Användare<span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="creator in main.creators" ng-click="main.filterCreators(creator.id)"><a>{{creator.user}}</a></li>
+                    <li ng-click="main.getAllEvents()"><a>Alla Användare</a></li>
+                </ul>
+            </div>
+            <input type="text" class="form-control" ng-model="search" style="width:90%; " placeholder="Search...">
+        </div>
+    </div>
+    <div class="col-md-7" data-ng-controller="mainController as main">
+        <map center="56.66830, 16.35315" zoom="2" class="map" style="height:500px;">
+            <marker data-ng-repeat="event in main.events"
+                    position="[{{event.position.latt}}, {{event.position.long}}]"
+                    title="{{event.description}}"
+                    animation="Animation.BOUNCE"
+                    visible="true">
+            </marker>
+        </map>
+    </div>
+    </div>
+
+
+

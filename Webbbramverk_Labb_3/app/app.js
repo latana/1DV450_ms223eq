@@ -7,6 +7,7 @@ angular.module('myApp', [
   'myApp.main',
   'myApp.logout',
     'myApp.createEvent',
+    'myApp.detail',
   'myApp.updateEvent',
   'myApp.version'
 ]).

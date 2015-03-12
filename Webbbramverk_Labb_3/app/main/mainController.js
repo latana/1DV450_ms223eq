@@ -16,7 +16,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
 
         $scope.isLoggedIn = appService.getIsLoggedIn();
         $scope.message = appService.getMessage();
-        var getEvent = this;
+        var get = this;
         var getConfig = {
             headers: {
                 "Authorization" : '12345',
@@ -24,15 +24,15 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
             }
         };
 
-        $http.get("http://localhost:3000/api/event", getConfig).success(function(data) {
-            getEvent.events = data;
+        $http.get('http://localhost:3000/api/tag', getConfig).success(function(data){
+            get.tags = data;
         }).error(function(data, status) {
-            getEvent.alert = data.error;
+            get.alert = data.error;
         });
 
-        getEvent.removeEvent = function(id) {
+        get.removeEvent = function(id) {
 
-            var index = getEvent.events.map(function(e) {return e.id;}).indexOf(id);
+            var index = get.events.map(function(e) {return e.id;}).indexOf(id);
             var url = "http://localhost:3000/api/event/" + id;
             var config = {
                 headers: {
@@ -44,7 +44,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
 
             promise.success(function(data, status, config){
 
-                getEvent.events.splice(index, 1);
+                get.events.splice(index, 1);
                 appService.setMessage('The event is deleted');
                 $scope.message = appService.getMessage();
             });
@@ -52,6 +52,44 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
             promise.error(function(data, status, config) {
                 console.log("NOT DELETED!!!");
             });
-
         };
+        get.filterTag = function(id){
+
+            $http.get('http://localhost:3000/api/tag/' + id, getConfig).success(function(data){
+                get.events = data;
+            }).error(function(data){
+                get.alert = data.error;
+            })
+        };
+
+        get.filterCreators = function(id){
+
+            $http.get('http://localhost:3000/api/creator/' + id, getConfig).success(function(data){
+                get.events = data;
+            }).error(function(data){
+                get.alert = data.error;
+            })
+        };
+
+        get.getAllEvents = function(){
+
+            $http.get("http://localhost:3000/api/event", getConfig).success(function(data) {
+                get.events = data;
+            }).error(function(data, status) {
+                get.alert = data.error;
+            });
+        };
+
+        get.getAllCreators = function(){
+
+            $http.get('http://localhost:3000/api/creator', getConfig).success(function(data){
+                get.creators = data;
+            }).error(function(data, status) {
+                get.alert = data.error;
+            });
+        };
+
+        get.getAllEvents();
+        get.getAllCreators();
+
     }]);

@@ -12,10 +12,6 @@ angular.module('myApp.login', ['ngRoute', 'ngCookies'])
     });
 }])
 
-    .factory('message', function(){
-        return{}
-    })
-
 .controller('loginController', ['$http', '$scope', '$location', '$rootScope', '$cookieStore', '$window', 'appService', function($http, $scope, $location, $rootScope, $cookieStore, $window, appService){
 
         var auth = this;

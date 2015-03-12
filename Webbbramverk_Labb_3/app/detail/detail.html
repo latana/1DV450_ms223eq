@@ -1,0 +1,12 @@
+
+
+<div class="col-md-7" data-ng-controller="detailController as detail">
+    <map center="56.66830, 16.35315" zoom="2" class="map" style="height:500px;">
+        <marker data-ng-repeat="event in detail.events"
+                position="[{{detail.position.latt}}, {{detail.position.long}}]"
+                title="{{detail.description}}"
+                animation="Animation.BOUNCE"
+                visible="true">
+        </marker>
+    </map>
+</div>
