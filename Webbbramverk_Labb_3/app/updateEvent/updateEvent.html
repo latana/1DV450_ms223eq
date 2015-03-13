@@ -5,8 +5,10 @@
         </div>
         <div class="panel-body">
             <form novalidate name="update.form" class="simple-form">
+                Title: <br />
+                <input type="text" ng-model="update.title"/><br />
                 Description: <br />
-                <input type="name" ng-model="update.description"/><br />
+                <input type="text" ng-model="update.description"/><br />
                 <button data-ng-click="update.update()">Update</button>
             </form>
         </div>

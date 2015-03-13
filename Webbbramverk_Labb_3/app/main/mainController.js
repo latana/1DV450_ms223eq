@@ -12,11 +12,12 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         });
     }])
 
-    .controller('mainController', ['$http', '$rootScope', '$scope', '$window', 'appService',function($http, $rootScope, $scope, $window, appService){
+    .controller('mainController', ['$http', '$rootScope', '$scope', '$window', 'appService', '$cookieStore',function($http, $rootScope, $scope, $window, appService, $cookieStore){
 
         $scope.isLoggedIn = appService.getIsLoggedIn();
         $scope.message = appService.getMessage();
         var get = this;
+        get.events = [];
         var getConfig = {
             headers: {
                 "Authorization" : '12345',
@@ -89,7 +90,9 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
             });
         };
 
+        get.checkUser = function(userName){
+            return userName === $cookieStore.get('user');
+        };
         get.getAllEvents();
         get.getAllCreators();
-
     }]);

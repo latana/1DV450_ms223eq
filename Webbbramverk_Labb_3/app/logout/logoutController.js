@@ -12,7 +12,9 @@ angular.module('myApp.logout', ['ngRoute'])
         });
     }])
 
-    .controller('logoutController', ['$location', '$window', 'appService', function($location, $window, appService) {
+    .controller('logoutController', ['$location', '$window', 'appService', '$cookieStore', function($location, $window, appService, $cookieStore) {
+
+        $cookieStore.remove('user');
         appService.setLoggedIn(false);
     }]);
 

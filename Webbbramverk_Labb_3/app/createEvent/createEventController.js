@@ -26,7 +26,7 @@ angular.module('myApp.createEvent', ['ngRoute'])
                 long = resp.coords.longitude;
                 var position = {long: long, latt: latt};
 
-                var event = {description: create.description};
+                var event = {title: create.title, description: create.description};
                 var tags = {name: create.tagName};
                 var data = {event:event, tags:tags, position: position};
                 var url = 'http://localhost:3000/api/event';

@@ -17,9 +17,9 @@
             </tr>
             </thead>
             <tr data-ng-repeat="event in main.events | filter:search">
-                <td><button ng-show="isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove</button></td>
-                <td><a href="#update/{{event.id}}" ng-show="isLoggedIn" ng-click="main.updateEvent(event)">Update</a></td>
-                <td><a href="#detail/{{event.id}}">{{event.description}}</a></td>
+                    <td><button ng-show="main.checkUser(event.creator.user) && isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove</button></td>
+                    <td><a ng-show="main.checkUser(event.creator.user) && isLoggedIn" href="#update/{{event.id}}" ng-click="main.updateEvent(event)">Update</a></td>
+                <td><a href="#detail/{{event.id}}">{{event.title}}</a></td>
             </tr>
         </table>
     </div>
@@ -44,17 +44,4 @@
             <input type="text" class="form-control" ng-model="search" style="width:90%; " placeholder="Search...">
         </div>
     </div>
-    <div class="col-md-7" data-ng-controller="mainController as main">
-        <map center="56.66830, 16.35315" zoom="2" class="map" style="height:500px;">
-            <marker data-ng-repeat="event in main.events"
-                    position="[{{event.position.latt}}, {{event.position.long}}]"
-                    title="{{event.description}}"
-                    animation="Animation.BOUNCE"
-                    visible="true">
-            </marker>
-        </map>
     </div>
-    </div>
-
-
-
