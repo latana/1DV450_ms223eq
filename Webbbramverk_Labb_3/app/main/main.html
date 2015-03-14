@@ -1,31 +1,16 @@
-<h1>Main page</h1>
-<div class="col-md-12" data-ng-controller="mainController as main">
+<div my-custom-directive></div>
+<div class="text-center col-md-12">
+<h1>My Event</h1>
+<div data-ng-controller="mainController as main">
 
-    <div class="col-md-4">
     <p class="alert alert-success" data-ng-show="isLoggedIn">Du är inloggad</p>
     <p class="alert alert-danger" data-ng-show="!isLoggedIn">Du är inte inloggad</p>
     <p class="alert alert-info" data-ng-show="message">{{message}}</p>
+    <p class="alert alert-danger" ng-show="error">{{error}}</p>
 
-    <h3>Alla events</h3>
-    <a href="#createEvent" ng-show="isLoggedIn">Create event</a>
-    <div id="list">
-        <table class=" table table-condensed table-striped">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tr data-ng-repeat="event in main.events | filter:search">
-                    <td><button ng-show="main.checkUser(event.creator.user) && isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove</button></td>
-                    <td><a ng-show="main.checkUser(event.creator.user) && isLoggedIn" href="#update/{{event.id}}" ng-click="main.updateEvent(event)">Update</a></td>
-                <td><a href="#detail/{{event.id}}">{{event.title}}</a></td>
-            </tr>
-        </table>
-    </div>
-    </div>
-    <div class="col-md-5">
-        <div class="input-group col-md-12">
+    <div class="col-md-8 col-md-offset-2">
+        <h3>Look for a event or create your own</h3>
+        <div class="input-group col-md-12 block-center">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tags<span class="caret"></span></button>
 
@@ -44,4 +29,24 @@
             <input type="text" class="form-control" ng-model="search" style="width:90%; " placeholder="Search...">
         </div>
     </div>
+
+    <div class="col-md-8 col-md-offset-2">
+    <a class="btn btn-default" role="button" href="#createEvent" ng-show="isLoggedIn">Create event</a>
+    <div id="list">
+        <table class=" table table-condensed table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr data-ng-repeat="event in main.events | filter:search">
+                    <td><button ng-show="main.checkUser(event.creator.user) && isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove</button></td>
+                    <td><a ng-show="main.checkUser(event.creator.user) && isLoggedIn" href="#update/{{event.id}}" ng-click="main.updateEvent(event)">Update</a></td>
+                <td><a href="#detail/{{event.id}}">{{event.title}}</a></td>
+            </tr>
+        </table>
     </div>
+    </div>
+    </div>
+</div>

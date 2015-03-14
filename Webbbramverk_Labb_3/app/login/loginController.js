@@ -36,13 +36,12 @@ angular.module('myApp.login', ['ngRoute', 'ngCookies'])
                 $window.sessionStorage.setItem('token', data.auth_token);
                 $scope.message = "Success";
                 appService.setLoggedIn(true);
-                console.log($window.sessionStorage.getItem('isLoggedIn'));
                 $location.path('/main');
             });
 
             promise.error(function(data, status, headers, config) {
 
-                $scope.message = data.error;
+                $scope.error = data.error;
                 $window.sessionStorage.setItem('token', false);
                 $window.sessionStorage.setItem('isLoggedIn', false);
             });

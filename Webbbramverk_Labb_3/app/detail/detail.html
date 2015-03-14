@@ -1,10 +1,10 @@
-
-
+<p class="alert alert-danger" ng-show="error">{{error}}</p>
+<div my-custom-directive></div>
 <div class="col-md-12" data-ng-controller="detailController as detail">
     <div class="col-md-4">
         <div class="panel panel-info">
             <div class="panel-heading">
-                {{detail.event.title}}
+                <p>Title: {{detail.event.title}}</p>
             </div>
             <div class="panel-body">
                 <p>Användare: {{detail.event.creator.user}}</p>
@@ -17,7 +17,7 @@
         <map center="{{detail.event.position.latt}}, {{detail.event.position.long}}" zoom="15" class="map" style="height:500px;">
             <marker
                     position="[{{detail.event.position.latt}}, {{detail.event.position.long}}]"
-                    title="{{detail.event.description}}"
+                    title="Title: {{detail.event.title}}"
                     animation="Animation.BOUNCE"
                     visible="true">
             </marker>

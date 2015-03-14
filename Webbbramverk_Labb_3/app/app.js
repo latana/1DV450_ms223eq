@@ -34,4 +34,12 @@ config(['$routeProvider', function($routeProvider) {
         this.getMessage = function(){
             return message;
         };
-}]);
+}])
+
+.directive('myCustomDirective', function() {
+    return {
+        templateUrl: 'myCustomDirective.html'
+    };
+});
+
+

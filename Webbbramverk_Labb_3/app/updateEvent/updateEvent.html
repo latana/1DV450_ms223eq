@@ -1,3 +1,5 @@
+<p class="alert alert-danger" ng-show="error">{{error}}</p>
+<div my-custom-directive></div>
 <div class="col-md-4" data-ng-controller="updateEventController as update">
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -8,7 +10,7 @@
                 Title: <br />
                 <input type="text" ng-model="update.title"/><br />
                 Description: <br />
-                <input type="text" ng-model="update.description"/><br />
+                <input type="text" ng-model="update.description"/><br /><br />
                 <button data-ng-click="update.update()">Update</button>
             </form>
         </div>

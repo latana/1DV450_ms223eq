@@ -1,0 +1,9 @@
+<div data-ng-controller="mainController">
+    <nav>
+        <ul class="nav nav-tabs">
+            <li role="presentation" ng-class="{active: isActive('/main')}"><a href="#/main">Main</a></li>
+            <li role="presentation" ng-class="{active: isActive('/login')}" data-ng-controller="mainController" data-ng-show="!isLoggedIn"><a href="#/login">Login</a></li>
+            <li role="presentation" ng-class="{active: isActive('/logout')}" data-ng-controller="mainController" data-ng-show="isLoggedIn"><a href="#/logout">Logout</a></li>
+        </ul>
+    </nav>
+</div>

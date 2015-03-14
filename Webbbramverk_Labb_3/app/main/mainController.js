@@ -12,7 +12,11 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         });
     }])
 
-    .controller('mainController', ['$http', '$rootScope', '$scope', '$window', 'appService', '$cookieStore',function($http, $rootScope, $scope, $window, appService, $cookieStore){
+    .controller('mainController', ['$http', '$rootScope', '$scope', '$window', 'appService', '$cookieStore', '$location',function($http, $rootScope, $scope, $window, appService, $cookieStore, $location){
+
+        $scope.isActive = function (viewLocation){
+            return viewLocation === $location.path();
+        };
 
         $scope.isLoggedIn = appService.getIsLoggedIn();
         $scope.message = appService.getMessage();
@@ -28,7 +32,8 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         $http.get('http://localhost:3000/api/tag', getConfig).success(function(data){
             get.tags = data;
         }).error(function(data, status) {
-            get.alert = data.error;
+            appService.setMessage(data.error);
+            get.alert = appService.getMessage();
         });
 
         get.removeEvent = function(id) {
@@ -51,7 +56,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
             });
 
             promise.error(function(data, status, config) {
-                console.log("NOT DELETED!!!");
+                $scope.error = data.error;
             });
         };
         get.filterTag = function(id){
@@ -59,7 +64,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
             $http.get('http://localhost:3000/api/tag/' + id, getConfig).success(function(data){
                 get.events = data;
             }).error(function(data){
-                get.alert = data.error;
+                $scope.alert = data.error;
             })
         };
 
@@ -68,7 +73,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
             $http.get('http://localhost:3000/api/creator/' + id, getConfig).success(function(data){
                 get.events = data;
             }).error(function(data){
-                get.alert = data.error;
+                $scope.alert = data.error;
             })
         };
 
@@ -77,7 +82,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
             $http.get("http://localhost:3000/api/event", getConfig).success(function(data) {
                 get.events = data;
             }).error(function(data, status) {
-                get.alert = data.error;
+                $scope.alert = data.error;
             });
         };
 
@@ -86,7 +91,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
             $http.get('http://localhost:3000/api/creator', getConfig).success(function(data){
                 get.creators = data;
             }).error(function(data, status) {
-                get.alert = data.error;
+                $scope.alert = data.error;
             });
         };
 

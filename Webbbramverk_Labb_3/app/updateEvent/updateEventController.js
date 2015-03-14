@@ -28,7 +28,7 @@ angular.module('myApp.updateEvent', ['ngRoute'])
             update.title = data.title;
             update.description = data.description;
         }).error(function(data, status) {
-            update.alert = data.error;
+            $scope.alert = data.error;
         });
 
         update.update = function(){
@@ -52,8 +52,7 @@ angular.module('myApp.updateEvent', ['ngRoute'])
             });
 
             promise.error(function(data, status, headers, config) {
-
-                $scope.message = data.error;
+                $scope.error = data.error;
             });
         }
 

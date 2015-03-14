@@ -46,7 +46,7 @@ angular.module('myApp.createEvent', ['ngRoute'])
                 });
 
                 promise.error(function(data, status, headers, config) {
-                    $scope.message = data.error;
+                    $scope.error = data.error;
                 });
 
             });

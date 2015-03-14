@@ -33,6 +33,6 @@ angular.module('myApp.detail', ['ngRoute', 'ngMap'])
             get.event = data;
             get.bool = true;
         }).error(function(data, status) {
-            get.alert = data.error;
+            $scope.alert = data.error;
         });
     }]);
