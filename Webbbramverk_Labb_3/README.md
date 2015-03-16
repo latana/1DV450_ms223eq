@@ -22,7 +22,7 @@ NOTE: If you have changed the url in the api project then you'll have to change 
 
 If you have any questions don't hesitate to contact me.
 
-Usernames: Hades, Kalle, Olle.
+Usernames: Hades, Kalle, Olle.<br></br>
 Password: password.
 All the users have the same password.
 
