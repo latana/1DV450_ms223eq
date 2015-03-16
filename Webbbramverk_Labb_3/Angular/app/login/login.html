@@ -1,0 +1,19 @@
+<div my-custom-directive></div>
+<div class="col-md-4 col-md-offset-4" data-ng-controller="loginController as user">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Logga in</h3>
+        </div>
+        <div class="panel-body">
+            <form novalidate name="user.form" class="simple-form">
+                Username: <br />
+                <input type="name" ng-model="user.user"/><br />
+                Password: <br />
+                <input type="password" ng-model="user.password"/>
+                <button data-ng-click="user.login()" class="infoButton">Logga in</button>
+            </form>
+            <div ng-show="error" class="alert-danger">{{error}}</div>
+            <h4>When you login you will ge a token that our system will use to create, delete and update</h4>
+        </div>
+    </div>
+</div>

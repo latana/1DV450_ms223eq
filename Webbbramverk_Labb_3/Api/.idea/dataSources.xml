@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3568354839">
+    <data-source source="LOCAL" name="Rails Webbramverk_Labb_1: development" uuid="7d52c3ae-b6fc-4aed-acd8-37536b544161">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\Program\Aptana\Github\1DV450_ms223eq\Webbbramverk_Labb_3\Api\db\development.sqlite3</jdbc-url>
+      <libraries />
+    </data-source>
+  </component>
+</project>

@@ -1,0 +1,52 @@
+<!-- Här har vi min custom directive--><div my-custom-directive></div>
+<div class="text-center col-md-12">
+<div data-ng-controller="mainController as main">
+
+    <p class="alert alert-success" data-ng-show="isLoggedIn">You are logged in</p>
+    <p class="alert alert-danger" data-ng-show="!isLoggedIn">You are not logged in</p>
+    <p class="alert alert-info" data-ng-show="message">{{message}}</p>
+    <p class="alert alert-danger" ng-show="error">{{error}}</p>
+
+    <div class="col-md-8 col-md-offset-2">
+        <h3>Look for a event or create your own</h3>
+        <div class="input-group col-md-12 block-center">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Tags<span class="caret"></span></button>
+
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="tag in main.tags" ng-click="main.filterTag(tag.id)"><a>{{tag.name}}</a></li>
+                    <li ng-click="main.getAllEvents()"><a>All Tags</a></li>
+                </ul>
+            </div>
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Creators<span class="caret"></span></button>
+                <ul class="dropdown-menu" role="menu">
+                    <li data-ng-repeat="creator in main.creators" ng-click="main.filterCreators(creator.id)"><a>{{creator.user}}</a></li>
+                    <li ng-click="main.getAllEvents()"><a>All Creators</a></li>
+                </ul>
+            </div>
+            <input type="text" class="form-control" ng-model="search" style="width:90%; " placeholder="Search...">
+        </div>
+    </div>
+
+    <div class="col-md-8 col-md-offset-2">
+    <a class="infoButton btn btn-default" role="button" href="#createEvent" ng-show="isLoggedIn">Create event</a>
+    <div id="list">
+        <table class=" table table-condensed table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tr data-ng-repeat="event in main.events | filter:search">
+                <td><strong>{{event.title}}</strong></td>
+                    <td><button id="deleteButton" ng-show="main.checkUser(event.creator.user) && isLoggedIn" type="button" ng-click="main.removeEvent(event.id)">Remove</button></td>
+                    <td><a id="updateButton" ng-show="main.checkUser(event.creator.user) && isLoggedIn" href="#update/{{event.id}}" ng-click="main.updateEvent(event)">Update</a></td>
+                <td><a class="infoButton" href="#detail/{{event.id}}">Detail</a></td>
+            </tr>
+        </table>
+    </div>
+    </div>
+    </div>
+</div>
