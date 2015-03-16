@@ -7,11 +7,13 @@ class Event < ActiveRecord::Base
   belongs_to :position
 
   validates :description, presence: true
+  validates :title, presence: true
 
   def serializable_hash (options={})
     options = {
 
-        only: [:id, :position_id, :creator_id, :description, :created_at, :updated_at],
+        include: {:position => {only: [:long, :latt]}, :creator => {only: [:user]}, :tags => {only:[:name]}},
+        only: [:id, :title, :position_id, :creator_id, :description, :created_at, :updated_at],
     }.update(options)
 
     json = super(options)

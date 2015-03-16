@@ -93,5 +93,4 @@ module LoginHelper
     puts error
     nil
   end
-
   end

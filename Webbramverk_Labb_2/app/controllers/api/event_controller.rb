@@ -41,22 +41,21 @@ class Api::EventController < ApplicationController
     event = Event.new(event_params)
     event.creator_id = @creator_id
     tag = Tag.new(tag_params)
+    position = Position.new(position_params)
 
     if Tag.find_by_name(tag.name.downcase).present?
       tag = Tag.find_by_name(tag.name.downcase)
     end
     # Sparar in i kopplingstabellen
     event.tags << tag
+    event.position = position
 
-    if event.save && tag.save
+    if event.save && tag.save && position.save
       respond_with event, location: url_for([:api, event]),status: :ok
     else
-      render json: {error: 'Somthing went wrong.'}, status: :not_found
-    end
-
-    rescue ActiveRecord::RecordInvalid
-      @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you using the right event_id?" )
+      @error = ErrorMessage.new("The event was not saved!", "Could not save resource" )
       respond_with  @error, status: :bad_request
+    end
 
   end
 
@@ -66,27 +65,36 @@ class Api::EventController < ApplicationController
     old_event = Event.find(params[:id])
     new_event = Event.new(event_params)
 
-    old_event.position_id = new_event.position_id
-    old_event.description = new_event.description
+    if new_event.position_id != nil
+      old_event.position_id = new_event.position_id
+    end
 
-    old_event.save
+    if old_event.creator_id == @creator_id
+      old_event.title = new_event.title
+      old_event.description = new_event.description
+
+     if old_event.save
       render json: old_event, status: :ok
+     end
+    else
+      @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you sure you are the right user?" )
+      render  json: @error, status: :not_found
+    end
 
-  rescue ActiveRecord::RecordNotFound
-    @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you using the right event_id?" )
-    render  json: @error, status: :not_found
 
   end
 
   # Tar bort ett event
   def destroy
     event = Event.find(params[:id])
-    event.destroy
-    render json: 'The event has been deleted'
 
-    rescue ActiveRecord::RecordNotFound
-      @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you using the right event_id?" )
+    if event.creator_id == @creator_id
+      event.destroy
+      render json: 'The event has been deleted'
+    else
+      @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you sure you are the right user?" )
       render json: @error, status: :not_found
+    end
   end
 
   # Hämtar ett event som finns i närheten av av en position.
@@ -109,12 +117,17 @@ class Api::EventController < ApplicationController
 
   private
   def event_params
-    params.require(:event).permit(:position_id, :description)
+    params.require(:event).permit(:title, :description)
   end
 
   private
   def tag_params
     params.require(:tags).permit(:name)
+  end
+
+  private
+  def position_params
+    params.require(:position).permit(:long, :latt)
   end
 
 end

@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20150217093013) do
   end
 
   create_table "events", force: true do |t|
+    t.string   "title"
     t.integer  "position_id"
     t.integer  "creator_id"
     t.string   "description"

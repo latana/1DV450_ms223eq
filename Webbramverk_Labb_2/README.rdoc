@@ -1,14 +1,28 @@
 == README
 
-Installation
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-1. Download the files and unzip it.
-2. Open the project (RubyMine recommended)
-3. Write "bundle install" to install all the gems
-4. Then write "rake db:migrate" to install the database.
-5. Then write "rake db:seed" to create an admin
-6. Open the postman file in postman to test the project.
+Things you may want to cover:
 
-Don't forget to change the auth token when you test the put, delete or post.
+* Ruby version
 
-Now you should be ready to test the project.
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+
+
+Please feel free to use a different markup language if you do not plan to run
+<tt>rake doc:app</tt>.

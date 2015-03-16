@@ -23,18 +23,14 @@ Creator.create!(user: 'Olle',
 Key.create!(user_id: 1,
                 key:              '12345')
 
-Position.create!(long: 16.3,
-                  latt: 28.4)
-
-Position.create!(long: 23.4,
-                 latt: 32.25)
+Position.create!(long: 13.157423,
+                  latt: 55.376243)
 
 
 Tag.create!(name: 'Simma',)
-Tag.create!(name: 'Rollspel',)
-Tag.create!(name: 'Förfest',)
 
 Event.create!(tags: Tag.all,
               position_id: 1,
               creator_id: 1,
+              title: "Mysterit i skogen",
             description: 'Nu ska vi ha kul')
