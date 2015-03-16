@@ -35,3 +35,7 @@ All the users have the same password.
 * Ett event har nu fått en titel.
 
 * När man skapar ett event så skapas även nu en position.
+
+## Beskrivning
+
+Syftet med applikationen är att användare ska kunna gå in och kolla upp vad för aktiviteter som finns på olika platser i världen. En inloggad användare kan skapa, uppdatera och ta bort ett event. En användare som inte är inloggad kan fortfarande titta runt på olika aktiviteter.
