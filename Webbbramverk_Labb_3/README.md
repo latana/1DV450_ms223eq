@@ -1,1 +1,13 @@
-asdasd
+== README
+
+Installation
+
+1. Download the files and unzip it.
+2. Open the project (RubyMine recommended)
+3. Write "bundle install" to install all the gems
+4. Then write "rake db:migrate" to install the database.
+5. Then write "rake db:seed" to create an admin.
+6. To start the server write "rails s"
+7. 
+Now you should be ready to test the project.
+To login as admin email: "admin@mail.com" password: "password"
