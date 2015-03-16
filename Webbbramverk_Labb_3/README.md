@@ -1,6 +1,4 @@
-== README
-
-Installation
+#Installation
 
 Let's start with the api map!
 
@@ -11,6 +9,8 @@ Let's start with the api map!
 5. Then write "rake db:seed" to create an admin.
 6. To start the server write "rails s"
 
+NOTE: If your using nitrous then you'll have to change the origins url in the config.ru file on line 8.
+
 Now let's continue with the angular part of the project!
 
 1. Download the file and unzip it.
@@ -18,6 +18,18 @@ Now let's continue with the angular part of the project!
 3. Open the index.html file in the app folder.
 4. Now open the file by pressing one of the browser-buttons in the upper-right corner.(They apper by hovering the mouse)
 
+NOTE: If you have changed the url in the api project then you'll have to change the url in updateController, mainController, loginController, detailController and createEventController. 
+
 If you have any questions don't hasitate to contact me
 
-To login as admin email: "admin@mail.com" password: "password"
+Usernames: Hades, Kalle, Olle.
+Password: password.
+All the users have the same password.
+
+## Förändringar i apiet
+
+För att användaren ska slippa fråga efter olika resurser och sedan loopa ut vilken resurs som tillhör vilken så får nu användaren ut alla resurser tillhörande ett event när man gör en get på event.
+
+Apiet kontrollerar nu så att bara samma användare kan ta bort eller uppdatera sin egna resurs.
+
+
