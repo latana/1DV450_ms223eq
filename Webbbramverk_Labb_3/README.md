@@ -20,7 +20,7 @@ Now let's continue with the angular part of the project!
 
 NOTE: If you have changed the url in the api project then you'll have to change the url in updateController, mainController, loginController, detailController and createEventController. 
 
-If you have any questions don't hasitate to contact me
+If you have any questions don't hesitate to contact me.
 
 Usernames: Hades, Kalle, Olle.
 Password: password.
@@ -28,8 +28,10 @@ All the users have the same password.
 
 ## Förändringar i apiet
 
-För att användaren ska slippa fråga efter olika resurser och sedan loopa ut vilken resurs som tillhör vilken så får nu användaren ut alla resurser tillhörande ett event när man gör en get på event.
+* För att användaren ska slippa fråga efter olika resurser och sedan loopa ut vilken resurs som tillhör vilken så får nu användaren ut alla resurser tillhörande ett event när man gör en get på event.
 
-Apiet kontrollerar nu så att bara samma användare kan ta bort eller uppdatera sin egna resurs.
+* Apiet kontrollerar nu så att bara samma användare kan ta bort eller uppdatera sin egna resurs.
 
+* Ett event har nu fått en titel.
 
+* När man skapar ett event så skapas även nu en position.
