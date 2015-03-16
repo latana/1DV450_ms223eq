@@ -1,6 +1,6 @@
 #Installation
 
-Let's start with the api map!
+Let's start with the api folder!
 
 1. Download the file and unzip it.
 2. Open the project (RubyMine recommended)
