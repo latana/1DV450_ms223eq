@@ -16,7 +16,7 @@ class Api::TagController < ApplicationController
 
     if tag.empty?
       @error = ErrorMessage.new('There is no tags to be found', 'There is no tags to be found')
-      respond_with  @error, status: :ok
+      respond_with json: @error, status: :ok
     else
       respond_with tag, status: :ok
     end
@@ -30,7 +30,7 @@ class Api::TagController < ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     @error = ErrorMessage.new("The tag was not found!", "Could not find resource. Are you using the right tag_id?" )
-    respond_with  @error, status: :not_found
+    respond_with json: @error, status: :not_found
 
   end
 
@@ -42,7 +42,7 @@ class Api::TagController < ApplicationController
       respond_with tag, location: url_for([:api, tag]),status: :ok
     else
       @error = ErrorMessage.new("The tag was not found!", "Could not find resource. Are you using the right tag_id?" )
-      respond_with  @error, status: :not_found
+      respond_with json: @error, status: :not_found
     end
   end
 

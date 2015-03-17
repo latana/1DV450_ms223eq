@@ -20,7 +20,7 @@ class Api::EventController < ApplicationController
     end
     if event.empty?
       @error = ErrorMessage.new('There is no event to be found', 'There is no event to be found')
-      respond_with  @error, status: :ok
+      respond_with json: @error, status: :ok
     else
       respond_with event, status: :ok
     end
@@ -33,7 +33,7 @@ class Api::EventController < ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you using the right event_id?" )
-    respond_with  @error, status: :not_found
+    respond_with json: @error, status: :not_found
   end
 
   # Skapar en event och en tag om den inte redan finns i listan.
@@ -54,7 +54,7 @@ class Api::EventController < ApplicationController
       respond_with event, location: url_for([:api, event]),status: :ok
     else
       @error = ErrorMessage.new("The event was not saved!", "Could not save resource" )
-      respond_with  @error, status: :bad_request
+      respond_with json: @error, status: :bad_request
     end
 
   end
