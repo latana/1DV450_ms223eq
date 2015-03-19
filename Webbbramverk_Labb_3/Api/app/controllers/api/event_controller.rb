@@ -29,11 +29,11 @@ class Api::EventController < ApplicationController
   # Hämtar ut ett event genom id
   def show
     event = Event.find(params[:id])
-    respond_with event
+    respond_with event, status: :ok
 
   rescue ActiveRecord::RecordNotFound
     @error = ErrorMessage.new("The event was not found!", "Could not find resource. Are you using the right event_id?" )
-    respond_with json: @error, status: :not_found
+    respond_with @error, status: :not_found
   end
 
   # Skapar en event och en tag om den inte redan finns i listan.

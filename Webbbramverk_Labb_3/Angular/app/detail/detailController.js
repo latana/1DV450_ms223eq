@@ -14,9 +14,10 @@ angular.module('myApp.detail', ['ngRoute', 'ngMap'])
 /**
  *  Tar in ett id från urlen och med det gör ett anrop mot apiet för att hämta det rätta eventet.
  */
-    .controller('detailController', ['$http', '$scope', '$routeParams',function($http, $scope, $routeParams){
+    .controller('detailController', ['$http', '$scope', '$routeParams', '$location',function($http, $scope, $routeParams, $location){
 
         var id = $routeParams.detailId;
+
         var get = this;
         get.bool = false;
 
@@ -32,7 +33,11 @@ angular.module('myApp.detail', ['ngRoute', 'ngMap'])
         $http.get('http://localhost:3000/api/event/' + id, getConfig).success(function(data){
             get.event = data;
             get.bool = true;
-        }).error(function(data, status) {
+        }).error(function(data, statuscode) {
+            if(statuscode === 404){
+                $location.path('/main');
+            }
+
             $scope.alert = data.error;
         });
     }]);

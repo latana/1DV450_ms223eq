@@ -11,9 +11,12 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
+  #Exempel
+  get '/login' => 'login#index', as => :user_todo #<--- Sätter namnet som du kan använda sen.
+
+
   root :to => redirect('/login')
   get '/register' => 'register#new'
-  get '/login' => 'login#index'
   get '/logout' => 'login#destroy'
   get '/key' => 'users#destroy'
   get '/delete/:id', to: 'users#destroy'
