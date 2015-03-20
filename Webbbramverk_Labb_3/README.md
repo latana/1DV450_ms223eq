@@ -15,10 +15,13 @@ Now let's continue with the angular part of the project!
 
 1. Download the file and unzip it.
 2. Open the project (Webstorm recommended).
-3. Open the index.html file in the app folder.
+3. Make sure you have npm installed.
+4. In the prompt window write "npm install"
+5. And then you write "bower install"
+3. Open the index.html file in the app folder.(Still in webstorm)
 4. Now open the file by pressing one of the browser-buttons in the upper-right corner.(They apper by hovering the mouse)
 
-NOTE: If you have changed the url in the api project then you'll have to change the url in updateController, mainController, loginController, detailController and createEventController. 
+NOTE: If you have changed the url in the api project then you'll have to change the url in updateController, mainController, loginController, detailController and createEventController in the Angular project. 
 
 If you have any questions don't hesitate to contact me.
 
