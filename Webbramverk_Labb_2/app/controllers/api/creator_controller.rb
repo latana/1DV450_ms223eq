@@ -11,7 +11,7 @@ class Api::CreatorController < ApplicationController
 
     if creator.empty?
       @error = ErrorMessage.new("There is no creator to be found", "There is no creator to be found" )
-      respond_with  @error, status: :ok
+      respond_with json: @error, status: :ok
     else
       respond_with creator, status: :ok
     end
@@ -25,7 +25,7 @@ class Api::CreatorController < ApplicationController
 
   rescue ActiveRecord::RecordNotFound
     @error = ErrorMessage.new("The creator was not found!", "Could not find resource. Are you using the right creator_id?" )
-    respond_with  @error, status: :not_found
+    respond_with json: @error, status: :not_found
   end
 
 # kontrollerar creator namnet och lösenordet och skickar en token.

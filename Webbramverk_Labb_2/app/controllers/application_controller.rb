@@ -17,7 +17,6 @@ class ApplicationController < ActionController::Base
     if params[:limit].present?
       @limit = params[:limit].to_i
     end
-    @offset ||= OFFSET
   end
 
 end
