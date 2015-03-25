@@ -14,9 +14,9 @@ angular.module('myApp.logout', ['ngRoute'])
 
 
 // Loggar ut användaren
-    .controller('logoutController', ['$location', '$window', 'appService', '$cookieStore', function($location, $window, appService, $cookieStore) {
+    .controller('logoutController', ['appService', '$cookieStore', function(appService, $cookieStore) {
 
         $cookieStore.remove('user');
-        appService.setLoggedIn(false);
+        appService.logout();
     }]);
 

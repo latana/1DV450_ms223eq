@@ -15,7 +15,7 @@ angular.module('myApp.login', ['ngRoute', 'ngCookies'])
  *  Gör ett anrop mot apiet med datan som användaren matat in.
  *  Systemet hämtar upp rätt och felmeddelanden.
  */
-.controller('loginController', ['$http', '$scope', '$location', '$rootScope', '$cookieStore', '$window', 'appService', function($http, $scope, $location, $rootScope, $cookieStore, $window, appService){
+.controller('loginController', ['$http', '$scope', '$location', '$cookieStore', '$window', 'appService', function($http, $scope, $location, $cookieStore, $window, appService){
 
         var auth = this;
 
@@ -26,7 +26,7 @@ angular.module('myApp.login', ['ngRoute', 'ngCookies'])
 
             var data = {'user': auth.user, 'password' : auth.password};
 
-            var url = "http://localhost:3000/api/auth";
+            var url = appService.getApiUrl() + "auth";
             var config = {
                 headers: {
                     "user" : data.user,
@@ -50,8 +50,7 @@ angular.module('myApp.login', ['ngRoute', 'ngCookies'])
             promise.error(function(data) {
 
                 $scope.error = data.error;
-                $window.sessionStorage.setItem('token', false);
-                $window.sessionStorage.setItem('isLoggedIn', false);
+                appService.logout();
             });
         }
     }]);

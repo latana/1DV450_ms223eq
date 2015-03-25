@@ -13,7 +13,7 @@ angular.module('myApp.createEvent', ['ngRoute'])
 /**
  * Skapar ett event från formuläret i createEvent.html
  */
-    .controller('createEventController', ['$http', '$rootScope', '$scope', '$window', 'appService', '$location', function($http, $rootScope, $scope, $window, appService, $location){
+    .controller('createEventController', ['$http', '$scope', '$window', 'appService', '$location', function($http, $scope, $window, appService, $location){
 
         var latt;
         var long;
@@ -38,7 +38,7 @@ angular.module('myApp.createEvent', ['ngRoute'])
                     var event = {title: create.title, description: create.description};
                     var tags = {name: create.tagName};
                     var data = {event: event, tags: tags, position: position};
-                    var url = 'http://localhost:3000/api/event';
+                    var url = appService.getApiUrl() + 'event';
 
                     var config = {
                         headers: {

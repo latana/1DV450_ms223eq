@@ -22,13 +22,13 @@ angular.module('myApp.updateEvent', ['ngRoute'])
         // förbereder anropet mot apiet
         var getConfig = {
             headers: {
-                "Authorization" : '12345',
+                "Authorization" : appService.getApiKey(),
                 "Accept" : "application/json"
             }
         };
 
         // Anropar och hämtar ut data från apiet
-        $http.get('http://localhost:3000/api/event/' + id, getConfig).success(function(data){
+        $http.get(appService.getApiUrl() + 'event/' + id, getConfig).success(function(data){
             update.title = data.title;
             update.description = data.description;
         }).error(function(data, status) {
@@ -39,7 +39,7 @@ angular.module('myApp.updateEvent', ['ngRoute'])
         update.update = function(){
 
             var data = {'title': update.title, 'description': update.description};
-            var url = 'http://localhost:3000/api/event/' + id;
+            var url = appService.getApiUrl() + 'event/' + id;
 
             var config = {
                 headers: {

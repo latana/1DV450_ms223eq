@@ -25,6 +25,10 @@ config(['$routeProvider', function($routeProvider) {
         $window.sessionStorage.setItem('isLoggedIn', value)
       };
 
+        this.logout = function(){
+          $window.sessionStorage.clear();
+        };
+
         // skickar inloggningen
       this.getIsLoggedIn = function(){
         return JSON.parse($window.sessionStorage.getItem('isLoggedIn'))
@@ -39,6 +43,14 @@ config(['$routeProvider', function($routeProvider) {
         this.getMessage = function(){
             return message;
         };
+
+        this.getApiUrl = function(){
+            return "http://localhost:3000/api/";
+        }
+
+        this.getApiKey = function(){
+            return "12345";
+        }
 }])
 
 .directive('myCustomDirective', function() {

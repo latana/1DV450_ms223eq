@@ -5,7 +5,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:D:\Program\RubyMine 7.0.2\Project\Webbramverk_Labb_2\db\development.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:D:\Program\Aptana\Github\1DV450_ms223eq\Webbramverk_Labb_2\db\development.sqlite3</jdbc-url>
       <libraries />
     </data-source>
   </component>

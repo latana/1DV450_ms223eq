@@ -11,7 +11,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         });
     }])
 
-    .controller('mainController', ['$http', '$rootScope', '$scope', '$window', 'appService', '$cookieStore', '$location',function($http, $rootScope, $scope, $window, appService, $cookieStore, $location){
+    .controller('mainController', ['$http', '$scope', '$window', 'appService', '$cookieStore', '$location',function($http, $scope, $window, appService, $cookieStore, $location){
 
         // Används för bootstrap och gör den valda menyn aktiv
         $scope.isActive = function (viewLocation){
@@ -28,7 +28,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         get.events = [];
         var getConfig = {
             headers: {
-                "Authorization" : '12345',
+                "Authorization" : appService.getApiKey(),
                 "Accept" : "application/json"
             }
         };
@@ -36,7 +36,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         /**
          * Hämtar ut alla taggar
          */
-        $http.get('http://localhost:3000/api/tag', getConfig).success(function(data){
+        $http.get(appService.getApiUrl() + 'tag', getConfig).success(function(data){
             get.tags = data;
         }).error(function(data, status) {
             appService.setMessage(data.error);
@@ -47,7 +47,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         get.removeEvent = function(id) {
 
             var index = get.events.map(function(e) {return e.id;}).indexOf(id);
-            var url = "http://localhost:3000/api/event/" + id;
+            var url = appService.getApiUrl() + "event/" + id;
             var config = {
                 headers: {
                     "userkey" : $window.sessionStorage.getItem('token'),
@@ -73,7 +73,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         // Filtrering på events genom det tag-id som kommit in
         get.filterTag = function(id){
 
-            $http.get('http://localhost:3000/api/tag/' + id, getConfig).success(function(data){
+            $http.get(appService.getApiUrl() + 'tag/' + id, getConfig).success(function(data){
                 get.events = data;
             }).error(function(data){
                 $scope.alert = data.error;
@@ -83,7 +83,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         // Filtrering på creators genom det creator-id som kommit in
         get.filterCreators = function(id){
 
-            $http.get('http://localhost:3000/api/creator/' + id, getConfig).success(function(data){
+            $http.get(appService.getApiUrl() + 'creator/' + id, getConfig).success(function(data){
                 get.events = data;
             }).error(function(data){
                 $scope.alert = data.error;
@@ -93,7 +93,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         // Hämtar ut alla events
         get.getAllEvents = function(){
 
-            $http.get("http://localhost:3000/api/event", getConfig).success(function(data) {
+            $http.get(appService.getApiUrl() + "event", getConfig).success(function(data) {
                 get.events = data;
             }).error(function(data, status) {
                 $scope.alert = data.error;
@@ -103,7 +103,7 @@ angular.module('myApp.main', ['ngRoute', 'ngMap'])
         // Hämtar alla creators
         get.getAllCreators = function(){
 
-            $http.get('http://localhost:3000/api/creator', getConfig).success(function(data){
+            $http.get(appService.getApiUrl() + 'creator', getConfig).success(function(data){
                 get.creators = data;
             }).error(function(data, status) {
                 $scope.alert = data.error;
